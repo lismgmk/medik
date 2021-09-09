@@ -7,8 +7,7 @@ import {connect} from "react-redux";
 class App extends Component {
   state = {
     loading: true,
-    // employees: [],
-    // worklog: []
+
   };
 
   componentDidMount() {
