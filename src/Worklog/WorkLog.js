@@ -5,22 +5,23 @@ import {NavLink} from "react-router-dom";
 
 class WorkLog extends Component {
 
-
     componentDidMount() {
         this.props.getAllWorklogs()
     }
 
-//     getDoctorsLogs(){
-// let doctor = this.props.worklogs.filter(i => {
-//     return i.employee_id === this.props.doctorsId
-// })
-//
-//             this.setState({
-//                 doctorsLogs: doctor
-//             })
-//
-//
-//     }
+
+    getListLogs(doctor, dataAll) {
+
+        for (let i = 0; i < doctor.length; i++) {
+            for (let j = 0; j < dataAll.length - 1; j++) {
+                if (doctor[i].to > dataAll[j].to && doctor[i].to < dataAll[j + 1].from) {
+                    doctor[i].counter++
+                }
+            }
+        }
+
+        return console.log(doctor)
+    }
 
     render() {
         const {loading} = this.props;
@@ -29,14 +30,23 @@ class WorkLog extends Component {
             return "Loading...";
         }
         let doctor
-        if(this.props.worklogs){
+        let dataAllDoctorsWithout = []
+
+        if (this.props.worklogs) {
             doctor = this.props.worklogs.filter(i => {
                 return i.employee_id === this.props.doctorsId
             })
+            dataAllDoctorsWithout = this.props.worklogs.filter(i => {
+                return i.employee_id !== this.props.doctorsId
+            })
+
         }
 
+        this.getListLogs(doctor, dataAllDoctorsWithout);
 
-        console.log( this.props.worklogs)
+        console.log(this.props.worklogs)
+        console.log(doctor)
+        console.log(dataAllDoctorsWithout)
         return <div>
             <NavLink to={"/employes"}>К списку врачей</NavLink>
             <div>
@@ -44,7 +54,7 @@ class WorkLog extends Component {
             </div>
 
             {doctor && doctor.map(item => {
-                return <div>
+                return <div style={{color: item.counter > 2 ? 'red' : ''}}>
                     <div>
                         Ушел в {item.from}
                     </div>
@@ -52,9 +62,10 @@ class WorkLog extends Component {
                         Пришел в {item.to}
                     </div>
                 </div>
-            })}
+            })
+            }
 
-        </div>;
+        </div>
     }
 
 }
@@ -64,14 +75,15 @@ function mapStateToProps(state) {
         worklogs: state.worklog.worklogs,
         loading: state.worklog.loading,
         doctorsName: state.worklog.doctorsName,
-        doctorsId: state.worklog.doctorsId
+        doctorsId: state.worklog.doctorsId,
+
     }
 }
 
 
 function mapDispatchToProps(dispatch) {
     return {
-        getAllWorklogs: () => dispatch(getAllWorklogs())
+        getAllWorklogs: () => dispatch(getAllWorklogs()),
     }
 }
 

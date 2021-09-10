@@ -39,7 +39,12 @@ export const getAllWorklogs = () => {
             getWorklog()
                 .then(data =>{
                     console.log(data)
-                    dispatch(actionsForWorkLog.getWorkLogs(data))
+                    data.map(i=>{
+                        return {...i, counter: 0}
+                    })
+                    dispatch(actionsForWorkLog.getWorkLogs( data.map(i=>{
+                        return {...i, counter: 0}
+                    })))
                     dispatch(actionsForWorkLog.loading(false))
                 })
         }
