@@ -1,13 +1,13 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import {appReducer} from "./appReducer";
 import thunkMiddleware from "redux-thunk";
+import {employesReducer} from "../Employes/employesReducer";
+import {worklogReducer} from "../Worklog/worklogReducer";
 
 
 const rootReducer = combineReducers({
-    app: appReducer
-    // employes: employesReducer,
-    // worklog: worklogReducer,
-    // isBreakingRules: isBreakingRulesReducer,
+    employes: employesReducer,
+    worklog: worklogReducer,
+    isBreakingRules: isBreakingRulesReducer
 });
 
 export let store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
