@@ -1,0 +1,26 @@
+
+.containerArrows {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 5px;
+    top: 20%;
+}
+.arrows{
+    margin: 2px;
+    cursor: pointer;
+    content: '';
+    width:0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    top: 100px;
+    left: 100px;
+}
+.arrowsUp{
+    border-bottom: 8px solid #2D2E46;
+}
+.arrowsDown{
+    border-top: 8px solid #2D2E46;
+}
+

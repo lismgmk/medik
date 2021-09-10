@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {getAllWorklogs} from "./worklogReducer";
 import {connect} from "react-redux";
 import {NavLink} from "react-router-dom";
+import {CircularProgress, Grid} from "@material-ui/core";
 
 class WorkLog extends Component {
 
@@ -27,7 +28,15 @@ class WorkLog extends Component {
         const {loading} = this.props;
 
         if (loading) {
-            return "Loading...";
+            return <Grid
+                container
+                xs={12}
+                justifyContent="center"
+            >
+                <CircularProgress color="secondary"
+                                  size={100}
+                />
+            </Grid>
         }
         let doctor
         let dataAllDoctorsWithout = []
