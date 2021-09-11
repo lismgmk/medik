@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {getAllWorklogs} from "./worklogReducer";
 import {connect} from "react-redux";
 import {NavLink} from "react-router-dom";
-import {CircularProgress, Grid} from "@material-ui/core";
+import {CircularProgress, Container, Grid} from "@material-ui/core";
 
 class WorkLog extends Component {
 
@@ -20,8 +20,17 @@ class WorkLog extends Component {
                 }
             }
         }
+        return doctor
+    }
 
-        return console.log(doctor)
+    getTime(date) {
+        let hour = new Date(date)
+        return hour.toLocaleTimeString()
+    }
+
+    getDate(date) {
+        let getDate = new Date(date)
+        return getDate.toLocaleDateString()
     }
 
     render() {
@@ -38,6 +47,8 @@ class WorkLog extends Component {
                 />
             </Grid>
         }
+
+
         let doctor
         let dataAllDoctorsWithout = []
 
@@ -48,36 +59,124 @@ class WorkLog extends Component {
             dataAllDoctorsWithout = this.props.worklogs.filter(i => {
                 return i.employee_id !== this.props.doctorsId
             })
-
         }
 
         this.getListLogs(doctor, dataAllDoctorsWithout);
 
-        console.log(this.props.worklogs)
-        console.log(doctor)
-        console.log(dataAllDoctorsWithout)
-        return <div>
-            <NavLink to={"/employes"}>К списку врачей</NavLink>
-            <div>
-                {this.props.doctorsName}
-            </div>
+        return <Container>
 
-            {doctor && doctor.map(item => {
-                return <div style={{color: item.counter > 2 ? 'red' : ''}}>
-                    <div>
-                        Ушел в {item.from}
-                    </div>
-                    <div>
-                        Пришел в {item.to}
-                    </div>
-                </div>
-            })
-            }
+            <Grid container
+                  direction="column"
+                  style={
+                      {
+                         fontSize: "20px"
+                      }}
+            >
+                <Grid item
+                      container
+                      justifyContent="center"
+                      xs
 
-        </div>
+                >
+                    <NavLink
+                        style={
+                            {
+                                color: "black"
+                            }}
+                        to={"/employes"}><h3>К списку врачей</h3></NavLink>
+
+                </Grid>
+
+                <Grid item
+                      container
+                      justifyContent="center"
+
+
+                >
+                   <h3>{this.props.doctorsName}</h3>
+                </Grid>
+
+                <Grid
+                    container
+                    spacing={1}
+                    style={
+                        {
+                            backgroundColor: 'gray',
+                            margin: "10px 0",
+                        }}
+                >
+                    <Grid item
+                          container
+                          justifyContent="center"
+                          xs={4}
+
+                    >
+                        <h3>Дата смены</h3>
+                    </Grid>
+                    <Grid item
+                          container
+                          justifyContent="center"
+                          xs={4}
+
+                    >
+                        <h3>Время ухода</h3>
+                    </Grid>
+                    <Grid item
+                          container
+                          justifyContent="center"
+                          xs={4}
+
+                    >
+                        <h3>Время прихода</h3>
+                    </Grid>
+
+                </Grid>
+                {doctor && doctor.map(item => {
+                    return <Grid
+                        container
+                        spacing={1}
+                        style={{
+                            backgroundColor: item.counter > 2 ? 'red' : 'rgb(207, 232, 252)',
+                            fontSize: "18px",
+                            padding: "10px 0",
+                            margin: "10px 0",
+                        }}>
+
+                        <Grid item
+                              container
+                              justifyContent="center"
+                              xs={4}
+                        >
+                            {this.getDate(item.from)}
+                            {this.getDate(item.to) !== this.getDate(item.from) ? ` - ${this.getDate(item.to)}` : ''}
+                        </Grid>
+
+                        <Grid item
+                              container
+                              justifyContent="center"
+                              xs={4}
+                        >
+                            {this.getTime(item.from)}
+                        </Grid>
+
+                        <Grid item
+                              container
+                              justifyContent="center"
+                              xs={4}
+                        >
+                            {this.getTime(item.to)}
+                        </Grid>
+
+
+                    </Grid>
+                })
+                }
+            </Grid>
+        </Container>
     }
 
 }
+
 
 function mapStateToProps(state) {
     return {

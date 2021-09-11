@@ -17,7 +17,8 @@ class Employes extends Component {
     }
 
     dateCurrent(date) {
-        return date.slice(0, 10).split('-').reverse().join('-')
+        let getDate = new Date(date)
+        return getDate.toLocaleDateString()
     }
 
     sendDoctorsName(name, id) {
