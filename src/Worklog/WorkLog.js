@@ -119,7 +119,7 @@ class WorkLog extends Component {
                           xs={4}
 
                     >
-                        <h3>Время ухода</h3>
+                        <h3>Время прихода </h3>
                     </Grid>
                     <Grid item
                           container
@@ -127,7 +127,7 @@ class WorkLog extends Component {
                           xs={4}
 
                     >
-                        <h3>Время прихода</h3>
+                        <h3>Время ухода</h3>
                     </Grid>
 
                 </Grid>
